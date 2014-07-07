@@ -1,0 +1,295 @@
+<!doctype html>
+<html>
+  <head>
+  <title>Last.fm party</title>
+  <style>
+    body {
+      min-width: 252px;
+      overflow-x: hidden;
+      margin: 0;
+      font-family: "Lucida Grande", Arial, Helvetica, Verdana, sans-serif;
+    }
+    #views .view {
+      display: none;
+    }
+    #views .view.show {
+      display: block;
+    }
+    .button,
+    button,
+    label,
+    input[type="checkbox"],
+    input[type="submit"] {
+      cursor: pointer;
+    }
+    #party .user-info a {
+      position: relative;
+      display: block;
+      text-decoration: none;
+      min-height: 60px;
+    }
+    #party .user-info .name {
+      position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+      color: white;
+      text-align: right;
+      padding: 10px;
+      font-size: 27px;
+      background-color: rgba(0,0,0,0.3);
+      transition: 0.2s background-color;
+      overflow-x: hidden;
+    }
+    #party .user-info .name span {
+      transition: 0.2s right;
+      position: relative;
+        right: 0;
+    }
+    #party.intro .user-info a .name span {
+      right: 15px;
+    }
+    #party .user-info a:hover .name
+     {
+      background-color: rgba(0,0,0,0.6);
+    }
+    #party .tracks-info a {
+      display: block;
+      padding-left: 70px;
+      min-height: 34px;
+      position: relative;
+      color: black;
+      text-decoration: none;
+      margin: 3px 0 2px 0;
+      transition: 0.2s background-color;
+    }
+    #party .tracks-info a:after {
+      content: '';
+      position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+      border-bottom: 1px solid gray;
+    }
+    #party .tracks-info a:last-child:after {
+      display: none;
+    }
+    #party .tracks-info a.now-playing {
+      background-color: #FFFCCA;
+      min-height: 64px;
+    }
+    #party .tracks-info a:hover {
+      text-decoration: underline;
+      background-color: #BFDFF4;
+    }
+    #party .tracks-info img {
+      position: absolute;
+        top: 0;
+        left: 0;
+    }
+    #party .tracks-info .artist {
+      font-weight: bold;
+    }
+    .footer {
+      border-top: 1px solid #9A9A9A;
+      background-color: #E6E6E6;
+      height: 25px;
+      line-height: 25px;
+      position: relative;
+      margin-top: 8px;
+      box-shadow: 0 0 3px 0 #9A9A9A;
+    }
+    .footer img {
+      margin: 0 3px -3px 3px;
+    }
+    .footer .button {
+      position: absolute;
+        top: 0;
+        bottom: 0;
+    }
+    .footer .button:first-child {
+        left: 0;
+    }
+    .footer .button:last-child {
+        right: 0;
+        left: auto;
+    }
+    .footer .button:hover {
+      text-decoration: underline;
+    }
+    .hide {
+      display: none;
+    }
+    .title {
+      font-size: 24px;
+      text-align: center;
+      padding: 8px;
+      border: 1px solid #AA0000;
+      background-image: linear-gradient(#e31b23, #b32024);
+      color: white;
+      text-shadow: rgba(0,0,0,0.1) 0 1px 1px;
+      margin-bottom: 12px;
+      box-shadow: 0 0 3px 0 #9A9A9A;
+    }
+    .center {
+      text-align: center;
+    }
+    .clearer {
+      clear: both;
+    }
+    .f-right {
+      float: right;
+    }
+    .f-left {
+      float: left;
+    }
+    #users .list {
+      margin: 10px 0;
+    }
+    #users .list .user {
+      position: relative;
+    }
+    #users .list .user .opener {
+      position: relative;
+      padding: 3px 10px 3px 45px;
+      height: 34px;
+      line-height: 34px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    #users .list .user .img {
+      position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+      width: 34px;
+      margin: 3px;
+      background-size: cover;
+      background-position: center;
+      background-color: rgba(0,0,0,0.2);
+      box-shadow: 0px 0px 3px black;
+      transition: 0.2s box-shadow;
+    }
+    #users .list .user .opener:hover {
+      text-decoration: underline;
+    }
+    #users .list .user .opener:hover .img {
+      box-shadow: none;
+    }
+    #users .list .user .remove {
+      opacity: 0;
+      transition: 0.2s opacity;
+      position: absolute;
+        top: 2px;
+        right: 2px;
+      font-size: 19px;
+    }
+    #users .list .user .remove:hover {
+      color: red;
+    }
+    #users .list .user:hover .remove {
+      opacity: 1;
+    }
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+      background-color: rgb(230,230,230);
+      border-radius: 100px;
+    }
+    ::-webkit-scrollbar:hover {
+      width: 7px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: rgb(150,150,150);
+      -webkit-border-radius: 100px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover,
+    ::-webkit-scrollbar-thumb:active  {
+      background-color: rgb(100,100,100);
+    }
+    .user-add-error {
+      color: red;
+    }
+    a {
+      color: #0187c5;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script src="jquery-1.11.1.min.js"></script>
+  <script src="md5.js"></script>
+  <script src="config.js"></script>
+  <script defer src="popup.js"></script>
+  </head>
+<body>
+  <div id="views">
+    <div class="view" data-name="authentificate">
+      <div class="title">Login</div>
+      <div class="center">
+        Authentication is required.
+      </div>
+    </div>
+    <div class="view" data-name="users" id="users">
+      <div class="title">Start party</div>
+      <form id="user-add" method="get" action="." class="center">
+        <input type="text" id="user-name" name="name" placeholder="Username">
+        <input type="submit" value="Add">
+      </form>
+      <div class="user-add-error center">
+
+      </div>
+      <div class="live-buttons list"></div>
+      <div class="footer">
+        <span class="button" data-action="view-settings"><img src="icon_settings.png">Options</span>
+        <span class="button hide"></span>
+      </div>
+    </div>
+    <div class="view" data-name="settings" id="settings">
+      <div class="title">Options</div>
+      <div>
+        <label for="sett-show-notifications">Show notifications:</label>
+        <input type="checkbox" name="sett-show-notifications" value="true" id="sett-show-notifications" class="sett-check">
+      </div>
+      <div>
+        <label for="sett-disable-scrobble">Disable scrobbling:</label>
+        <input type="checkbox" name="sett-disable-scrobble" value="true" id="sett-disable-scrobble" class="sett-check">
+      </div>
+      <div>
+        <br>
+        Author: <a href="http://cz.linkedin.com/in/chalupafilip/" target="_blank" title="LinkedIn">Filip Chalupa</a>
+      </div>
+      <div class="center">
+        <br>
+        <button class="button" data-action="logout">Log out</button>
+      </div>
+      <div class="footer">
+        <span class="button" data-action="leavesettings">Go back<img src="icon_leave.png"></span>
+      </div>
+    </div>
+    <div class="view" data-name="logout">
+      <div class="title">Done</div>
+      <div class="center">
+        You have been logged out.
+        <br>
+        <br>
+        <button class="button" data-action="login">Log in</button>
+      </div>
+    </div>
+    <div class="view" data-name="party" id="party">
+      <div class="user-info"></div>
+      <div class="info-text"></div>
+      <div class="tracks-info"></div>
+      <div class="footer">
+        <span class="button" data-action="view-settings"><img src="icon_settings.png">Options</span>
+        <span class="button" data-action="leaveparty">Leave party<img src="icon_leave.png"></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
