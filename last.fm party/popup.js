@@ -19,6 +19,7 @@ var lastFm_apiKey = 'a54aae94377c86e67aec869bc86bc7dc',
 	$userAddName = $('#user-name'),
 	$usersList = $('#users .list'),
 	$settCheck = $('.sett-check'),
+	$settText = $('.sett-text'),
 	$userInfo = $('#party .user-info'),
 	$tracksInfo = $('#party .tracks-info'),
 	$userAddError = $('#users .user-add-error'),
@@ -233,9 +234,10 @@ function updateTracks() {
 			]), function(data) {
 			if (!data.error) {
 				$tracksInfo.empty();
-				var count = 0;
+				var count = 0,
+					limit = localStorage['sett-history-length']?parseInt(localStorage['sett-history-length']):5;
 				$.each(data.recenttracks.track,function(key,val){
-					if (++count > 5) {
+					if (++count > limit) {
 						return false;
 					}
 					if (val['@attr'] || val.date.uts > startAfter) {
@@ -342,6 +344,17 @@ $settCheck.change(function(){
 	var $this = $(this);
 	localStorage[$this.attr('name')] = $this.prop('checked');
 });
+$settText.each(function(){
+	var $this = $(this);
+	if ($this.attr('name') in localStorage) {
+		$this.val(localStorage[$this.attr('name')]);
+	}
+});
+$settText.change(function(){
+	var $this = $(this);
+	localStorage[$this.attr('name')] = $this.val();
+});
+
 
 
 
