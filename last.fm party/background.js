@@ -77,7 +77,7 @@ function startAlarm(min) {
 						var imgSrc = '';
 						if (isPlaying && data.recenttracks.track[0].mbid !== localStorage.nowPlayingId) {
 							localStorage.nowPlayingId = data.recenttracks.track[0].mbid;
-							//now playing-
+							//now playing
 							if (!(localStorage['sett-disable-scrobble'] === 'true')) {
 								$.post(baseURL,prepareParams([
 									['method','track.updateNowPlaying'],
@@ -101,12 +101,15 @@ function startAlarm(min) {
 									imgSrc = 'track_cover.png';
 								}
 								localStorage.notificationLink = data.recenttracks.track[0].url;
+								chrome.notifications.clear('now-playing',function(){});
 								chrome.notifications.create('now-playing', {
 										type: 'basic',
-										title: data.recenttracks.track[0].artist['#text'],
-										message: data.recenttracks.track[0].name,
+										title: 'Now playing:',
+										message: data.recenttracks.track[0].artist['#text']+' - '+data.recenttracks.track[0].name,
 										iconUrl: imgSrc
-									}, function(id) {});
+									}, function(id) {
+										//console.log("Last error:", chrome.runtime.lastError);
+									});
 							}
 						}
 					}
