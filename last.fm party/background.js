@@ -101,7 +101,7 @@ function startAlarm(min) {
 									imgSrc = 'track_cover.png';
 								}
 								localStorage.notificationLink = data.recenttracks.track[0].url;
-								chrome.notifications.create('', {
+								chrome.notifications.create('now-playing', {
 										type: 'basic',
 										title: data.recenttracks.track[0].artist['#text'],
 										message: data.recenttracks.track[0].name,
