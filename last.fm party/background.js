@@ -68,6 +68,7 @@ function startAlarm(min) {
 									['api_key',apiKey],
 									['artist[0]',data.recenttracks.track[isPlaying?1:0].artist['#text']],
 									['track[0]',data.recenttracks.track[isPlaying?1:0].name],
+									['album[0]',data.recenttracks.track[isPlaying?1:0].album['#text']],
 									['timestamp[0]',localStorage.lastTime],
 									['chosenByUser[0]',0],
 									['sk',localStorage.userSession]
@@ -84,6 +85,7 @@ function startAlarm(min) {
 									['api_key',apiKey],
 									['artist',data.recenttracks.track[0].artist['#text']],
 									['track',data.recenttracks.track[0].name],
+									['album',data.recenttracks.track[0].album['#text']],
 									['duration',300],
 									['sk',localStorage.userSession]
 								]), function(data) {});

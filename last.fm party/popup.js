@@ -354,6 +354,10 @@ $settText.change(function(){
 	var $this = $(this);
 	localStorage[$this.attr('name')] = $this.val();
 });
+if (localStorage['just-authenticated'] === 'true') {
+	_gaq.push(['_trackEvent', 'authenticated', localStorage.userName]);
+	localStorage.removeItem('just-authenticated');
+}
 
 
 

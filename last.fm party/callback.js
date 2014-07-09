@@ -25,7 +25,6 @@ $(function () {
 	function setStatus(text) {
 		$status.html(text);
 	}
-	var apiSig = 'xx';
 	$.getJSON(createURL([
 			['method','auth.getSession'],
 			['token',userToken],
@@ -37,6 +36,7 @@ $(function () {
 			} else {
 				localStorage.userSession = data.session.key;
 				localStorage.userName = data.session.name;
+				localStorage['just-authenticated'] = 'true';
 				$status.html('<b>Authentication was successful.</b><br>You can close this window.');
 			}
 		} catch (e) {}
