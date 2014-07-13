@@ -3,7 +3,7 @@
 
   "name": "Last.fm party",
   "description": "This extension allows you to scrobble what somebody else is scrobbling.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "author": "Filip Chalupa",
 
   "incognito": "split",
@@ -18,7 +18,7 @@
     "http://ws.audioscrobbler.com/",
     "http://*.last.fm/"
   ],
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://stats.g.doubleclick.net; object-src 'self'",
   "web_accessible_resources": [
     "callback.html",
     "app_128.png"
