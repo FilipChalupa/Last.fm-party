@@ -43,80 +43,85 @@ function startAlarm(min) {
 	if (localStorage.processAlarmCount < 9) {
 		localStorage.processAlarmCount++;
 	} else {
-		$.getJSON(createURL([
-				['method','user.getrecenttracks'],
-				['api_key',apiKey],
-				['user',localStorage.partyID]
-			]), function(data) {
-			try {
-				if (!data.error) {
-					if (data.recenttracks.track.length > 1) {
-						var isPlaying = false;
-						if (data.recenttracks.track[0].hasOwnProperty('@attr')) {
-							isPlaying = true;
-						}
-						if (localStorage.lastTime == 0) {
-							localStorage.lastTime = data.recenttracks.track[isPlaying?1:0].date.uts;
-							localStorage.startTime = localStorage.lastTime;
-						} else if (data.recenttracks.track[isPlaying?1:0].date.uts > parseInt(localStorage.lastTime)) {
-							localStorage.lastTime = data.recenttracks.track[isPlaying?1:0].date.uts;
-							//scrobble
-							if (!(localStorage['sett-disable-scrobble'] === 'true')) {
-								console.log('Scrobble: '+data.recenttracks.track[isPlaying?1:0].artist['#text']+' - '+data.recenttracks.track[isPlaying?1:0].name);
-								$.post(baseURL,prepareParams([
-									['method','track.scrobble'],
-									['api_key',apiKey],
-									['artist[0]',data.recenttracks.track[isPlaying?1:0].artist['#text']],
-									['track[0]',data.recenttracks.track[isPlaying?1:0].name],
-									['album[0]',data.recenttracks.track[isPlaying?1:0].album['#text']],
-									['timestamp[0]',localStorage.lastTime],
-									['chosenByUser[0]',0],
-									['sk',localStorage.userSession]
-								]), function(data) {});
+		$.ajax({
+		    cache: false,
+		    url: createURL([
+					['method','user.getrecenttracks'],
+					['api_key',apiKey],
+					['user',localStorage.partyID]
+				]),
+		    dataType: "json",
+		    success: function(data) {
+		        try {
+					if (!data.error) {
+						if (data.recenttracks.track.length > 1) {
+							var isPlaying = false;
+							if (data.recenttracks.track[0].hasOwnProperty('@attr')) {
+								isPlaying = true;
 							}
-						}
-						var imgSrc = '';
-						if (isPlaying && data.recenttracks.track[0].mbid !== localStorage.nowPlayingId) {
-							localStorage.nowPlayingId = data.recenttracks.track[0].mbid;
-							//now playing
-							if (!(localStorage['sett-disable-scrobble'] === 'true')) {
-								$.post(baseURL,prepareParams([
-									['method','track.updateNowPlaying'],
-									['api_key',apiKey],
-									['artist',data.recenttracks.track[0].artist['#text']],
-									['track',data.recenttracks.track[0].name],
-									['album',data.recenttracks.track[0].album['#text']],
-									['duration',300],
-									['sk',localStorage.userSession]
-								]), function(data) {});
-							}
-							console.log('Now playing: '+data.recenttracks.track[0].artist['#text']+' - '+data.recenttracks.track[0].name);
-							chrome.runtime.sendMessage('update-party-playlist');
-							if (localStorage['sett-show-notifications'] === "true") {
-								$.each(data.recenttracks.track[0].image,function(key,val){
-									if (val['size'] === 'large') {
-										imgSrc = val['#text'];
-										return false;
-									}
-								});
-								if (!imgSrc) {
-									imgSrc = 'track_cover.png';
+							if (localStorage.lastTime == 0) {
+								localStorage.lastTime = data.recenttracks.track[isPlaying?1:0].date.uts;
+								localStorage.startTime = localStorage.lastTime;
+							} else if (data.recenttracks.track[isPlaying?1:0].date.uts > parseInt(localStorage.lastTime)) {
+								localStorage.lastTime = data.recenttracks.track[isPlaying?1:0].date.uts;
+								//scrobble
+								if (!(localStorage['sett-disable-scrobble'] === 'true')) {
+									console.log('Scrobble: '+data.recenttracks.track[isPlaying?1:0].artist['#text']+' - '+data.recenttracks.track[isPlaying?1:0].name);
+									$.post(baseURL,prepareParams([
+										['method','track.scrobble'],
+										['api_key',apiKey],
+										['artist[0]',data.recenttracks.track[isPlaying?1:0].artist['#text']],
+										['track[0]',data.recenttracks.track[isPlaying?1:0].name],
+										['album[0]',data.recenttracks.track[isPlaying?1:0].album['#text']],
+										['timestamp[0]',localStorage.lastTime],
+										['chosenByUser[0]',0],
+										['sk',localStorage.userSession]
+									]), function(data) {});
 								}
-								localStorage.notificationLink = data.recenttracks.track[0].url;
-								chrome.notifications.clear('now-playing',function(){});
-								chrome.notifications.create('now-playing', {
-										type: 'basic',
-										title: 'Now playing:',
-										message: data.recenttracks.track[0].artist['#text']+' - '+data.recenttracks.track[0].name,
-										iconUrl: imgSrc
-									}, function(id) {
-										//console.log("Last error:", chrome.runtime.lastError);
+							}
+							var imgSrc = '';
+							if (isPlaying && data.recenttracks.track[0].mbid !== localStorage.nowPlayingId) {
+								localStorage.nowPlayingId = data.recenttracks.track[0].mbid;
+								//now playing
+								if (!(localStorage['sett-disable-scrobble'] === 'true')) {
+									$.post(baseURL,prepareParams([
+										['method','track.updateNowPlaying'],
+										['api_key',apiKey],
+										['artist',data.recenttracks.track[0].artist['#text']],
+										['track',data.recenttracks.track[0].name],
+										['album',data.recenttracks.track[0].album['#text']],
+										['duration',300],
+										['sk',localStorage.userSession]
+									]), function(data) {});
+								}
+								console.log('Now playing: '+data.recenttracks.track[0].artist['#text']+' - '+data.recenttracks.track[0].name);
+								chrome.runtime.sendMessage('update-party-playlist');
+								if (localStorage['sett-show-notifications'] === "true") {
+									$.each(data.recenttracks.track[0].image,function(key,val){
+										if (val['size'] === 'large') {
+											imgSrc = val['#text'];
+											return false;
+										}
 									});
+									if (!imgSrc) {
+										imgSrc = 'track_cover.png';
+									}
+									localStorage.notificationLink = data.recenttracks.track[0].url;
+									chrome.notifications.clear('now-playing',function(){});
+									chrome.notifications.create('now-playing', {
+											type: 'basic',
+											title: 'Now playing:',
+											message: data.recenttracks.track[0].artist['#text']+' - '+data.recenttracks.track[0].name,
+											iconUrl: imgSrc
+										}, function(id) {
+											//console.log("Last error:", chrome.runtime.lastError);
+										});
+								}
 							}
 						}
 					}
-				}
-			} catch (e) {}
+				} catch (e) {}
+		    }
 		});
 	}
 }
