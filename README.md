@@ -1,4 +1,4 @@
-Last.fm-party
+Last.fm party
 =============
 
 Google Chrome extension
