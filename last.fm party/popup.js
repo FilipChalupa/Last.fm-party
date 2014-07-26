@@ -23,7 +23,8 @@ var lastFm_apiKey = 'a54aae94377c86e67aec869bc86bc7dc',
 	$userInfo = $('#party .user-info'),
 	$tracksInfo = $('#party .tracks-info'),
 	$userAddError = $('#users .user-add-error'),
-	$partyInfoText = $('#party .info-text');
+	$partyInfoText = $('#party .info-text'),
+	$socialFacebook = $('#social_facebook');
 function createURL(params) {
 	params = prepareParams(params);
 	var query = '?';
@@ -47,6 +48,9 @@ function prepareParams(params) {
 	newParams['api_sig'] = MD5(chain+apiSecret);
 	newParams['format'] = 'json';
 	return newParams;
+}
+function isEmpty(el){
+	return !$.trim(el.html())
 }
 function getJSONFromStorage(name) {
 	try {
@@ -104,6 +108,10 @@ function action(name,param,param2) {
 					$partyInfoText.text('');
 				} else {
 					$partyInfoText.text('The tracks won\'t be scrobbled to your profile.');
+				}
+			} else if (param === 'settings') {
+				if (isEmpty($socialFacebook)) {
+					$socialFacebook.append('<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Flast.fm.party&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=737290722994545" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true" width="100%"></iframe>');
 				}
 			}
 			break;

@@ -245,6 +245,13 @@
     a:hover {
       text-decoration: underline;
     }
+    #social_facebook {
+      overflow: auto;
+      padding: 5px 0;
+    }
+    .text-padding {
+      margin: 0 5px;
+    }
   </style>
   <script src="jquery-1.11.1.min.js"></script>
   <script src="md5.js"></script>
@@ -265,7 +272,7 @@
         <input type="text" id="user-name" name="name" placeholder="Username">
         <input type="submit" value="Add">
       </form>
-      <div class="user-add-error center"></div>
+      <div class="user-add-error center text-padding"></div>
       <div class="live-buttons list"></div>
       <div class="footer">
         <span class="button" data-action="view-settings"><img src="icon_settings.png">Options</span>
@@ -274,21 +281,28 @@
     </div>
     <div class="view" data-name="settings" id="settings">
       <div class="title">Options</div>
-      <div>
-        <label for="sett-show-notifications">Show notifications:</label>
-        <input type="checkbox" name="sett-show-notifications" value="true" id="sett-show-notifications" class="sett-check">
-      </div>
-      <div>
-        <label for="sett-disable-scrobble">Disable scrobbling:</label>
-        <input type="checkbox" name="sett-disable-scrobble" value="true" id="sett-disable-scrobble" class="sett-check">
-      </div>
-      <div>
-        <label for="sett-history-length">History length:</label>
-        <input type="number" name="sett-history-length" id="sett-history-length" min="1" max="10" step="1" value="5" class="sett-text">
-      </div>
-      <div>
-        <br>
-        Author: <a href="http://cz.linkedin.com/in/chalupafilip/" target="_blank" title="LinkedIn">Filip Chalupa</a>
+      <div class="text-padding">
+        <div>
+          <label for="sett-show-notifications">Show notifications:</label>
+          <input type="checkbox" name="sett-show-notifications" value="true" id="sett-show-notifications" class="sett-check">
+        </div>
+        <div>
+          <label for="sett-disable-scrobble">Disable scrobbling:</label>
+          <input type="checkbox" name="sett-disable-scrobble" value="true" id="sett-disable-scrobble" class="sett-check">
+        </div>
+        <div>
+          <label for="sett-history-length">History length:</label>
+          <input type="number" name="sett-history-length" id="sett-history-length" min="1" max="10" step="1" value="5" class="sett-text">
+        </div>
+        <div>
+          <br>
+          Author: <a href="http://cz.linkedin.com/in/chalupafilip/" target="_blank" title="LinkedIn">Filip Chalupa</a>
+        </div>
+        <div>
+          <br>
+          Facebook: <a href="https://www.facebook.com/last.fm.party" target="_blank">Last.fm party</a>
+        <div id="social_facebook"></div>
+        </div>
       </div>
       <div class="center">
         <br>
@@ -309,7 +323,7 @@
     </div>
     <div class="view no-title" data-name="party" id="party">
       <div class="user-info"></div>
-      <div class="info-text"></div>
+      <div class="info-text text-padding"></div>
       <div class="tracks-info"></div>
       <div class="footer">
         <span class="button" data-action="view-settings"><img src="icon_settings.png">Options</span>
