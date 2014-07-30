@@ -151,7 +151,7 @@ function action(name,param,param2) {
 			action('view','party');
 			break;
 		case 'leaveparty':
-			_gaq.push(['_trackEvent', 'party-stop', localStorage.partyID]);
+			_gaq.push(['_trackEvent', 'party-stop', localStorage.partyLengthCounter]);
 			chrome.runtime.sendMessage('stop-party');
 			localStorage.removeItem('partyID');
 			action('view','users');

@@ -43,6 +43,9 @@ function startAlarm(min) {
 	if (localStorage.processAlarmCount < 9) {
 		localStorage.processAlarmCount++;
 	} else {
+		chrome.browserAction.setIcon({
+			path: 'icon_party.png'
+		}, function (){});
 		$.ajax({
 		    cache: false,
 		    url: createURL([
