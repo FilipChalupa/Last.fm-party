@@ -147,6 +147,7 @@ function action(name,param,param2) {
 			localStorage.partyID = param;
 			$userAddName.val(param);
 			$userAdd.submit();
+			localStorage.partyLengthCounter = 0;
 			action('view','party');
 			break;
 		case 'leaveparty':
@@ -222,7 +223,7 @@ function showPartyDetail() {
 			if (!name) {
 				name = data.user.name;
 			}
-			html += '<div class="name"><span>'+name+'</span></div></a>';
+			html += '<div class="name"><div>'+name+'</div><div class="counter"><span class="counter-text" title="Songs played in the party"></span></div></div></a>';
 			$userInfo.append(html);
 		}
 	})
@@ -242,6 +243,9 @@ function updateTracks() {
 			]), function(data) {
 			if (!data.error) {
 				$tracksInfo.empty();
+				if (parseInt(localStorage.partyLengthCounter) !== 0) {
+					$userInfo.find('.counter-text').text(localStorage.partyLengthCounter);
+				}
 				var count = 0,
 					limit = localStorage['sett-history-length']?parseInt(localStorage['sett-history-length']):5;
 				$.each(data.recenttracks.track,function(key,val){

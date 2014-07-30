@@ -64,6 +64,7 @@ function startAlarm(min) {
 								localStorage.startTime = localStorage.lastTime;
 							} else if (data.recenttracks.track[isPlaying?1:0].date.uts > parseInt(localStorage.lastTime)) {
 								localStorage.lastTime = data.recenttracks.track[isPlaying?1:0].date.uts;
+								localStorage.partyLengthCounter = 1+parseInt(localStorage.partyLengthCounter);
 								//scrobble
 								if (!(localStorage['sett-disable-scrobble'] === 'true')) {
 									console.log('Scrobble: '+data.recenttracks.track[isPlaying?1:0].artist['#text']+' - '+data.recenttracks.track[isPlaying?1:0].name);
