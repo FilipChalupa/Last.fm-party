@@ -169,7 +169,6 @@ function action(name,param,param2) {
 		case 'login':
 			_gaq.push(['_trackEvent', 'login','-']);
 			window.open('http://www.last.fm/api/auth/?api_key='+lastFm_apiKey+'&cb='+encodeURI(window.location.origin+'/callback.html'),'_blank');
-			action('view','authentificate');
 			break;
 		default:
 			alert(name + ' - ' + param);
@@ -375,7 +374,7 @@ if (localStorage['just-authenticated'] === 'true') {
 
 
 if (!localStorage.userSession) {
-	action('login');
+	action('view','authentificate');
 } else {
 	if (localStorage.partyID) {
 		action('view','party');

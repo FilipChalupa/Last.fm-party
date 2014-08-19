@@ -257,6 +257,17 @@
     .text-padding {
       margin: 0 5px;
     }
+    #authentificate button {
+      margin: 0;
+      position: relative;
+        top: 0;
+      transition: 0.6s top, 0.6s opacity;
+      font-size: 120%;
+    }
+    #authentificate.intro button {
+        top: -30px;
+      opacity: 0;
+    }
   </style>
   <script src="jquery-1.11.1.min.js"></script>
   <script src="md5.js"></script>
@@ -265,10 +276,15 @@
   </head>
 <body>
   <div id="views">
-    <div class="view no-footer" data-name="authentificate">
+    <div class="view no-footer" data-name="authentificate" id="authentificate">
       <div class="title">Login</div>
       <div class="center">
-        Authentication is required.
+        Last.fm authentication is required.
+        <br>
+        <br>
+        <button class="button" data-action="login">Authenticate</button>
+        <br>
+        <br>
       </div>
     </div>
     <div class="view" data-name="users" id="users">
