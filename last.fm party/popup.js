@@ -94,6 +94,7 @@ function action(name,param,param2) {
 					$.each(data,function(key,val){
 						addUserToList(val.name,val.realname,val.imageurl);
 					});
+					addUserToListRunIntro(true);
 				}
 				$userAddName.focus();
 		    	chrome.browserAction.setIcon({
@@ -273,13 +274,27 @@ function updateTracks() {
 		});
 	}
 }
-
 function addUserToList(name,realname,imageurl,prepend) {
-	var html = '<div class="user" data-name="'+name+'" data-realname="'+realname+'" data-imageurl="'+imageurl+'"><div class="button opener" title="Join '+name+'!" data-action="startparty-'+name+'"><div class="img"'+(imageurl?' style="background-image: url('+imageurl+');"':'')+'></div>'+(realname?realname:name)+'</div><span class="button remove" title="Remove '+name+' from the list." data-action="removeuser-'+name+'">&#215;</span></div>';
+	var html = '<div class="user intro" data-name="'+name+'" data-realname="'+realname+'" data-imageurl="'+imageurl+'"><div class="button opener" title="Join '+name+'!" data-action="startparty-'+name+'"><div class="img"'+(imageurl?' style="background-image: url('+imageurl+');"':'')+'></div>'+(realname?realname:name)+'</div><span class="button remove" title="Remove '+name+' from the list." data-action="removeuser-'+name+'">&#215;</span></div>';
 	if (prepend) {
 		$usersList.prepend(html);
 	} else {
 		$usersList.append(html);
+	}
+}
+function addUserToListRunIntro(animate) {
+	var addUserToListDelay = 200,
+		$items = $usersList.find('.intro');
+	if (animate === true) {
+		$items.each(function(){
+			var $this = $(this);
+			setTimeout(function($item){
+				$this.removeClass('intro');
+			},addUserToListDelay,$this);
+			addUserToListDelay+=40;
+		});
+	} else {
+		$items.removeClass('intro');
 	}
 }
 function updateUsersStorage() {
@@ -329,6 +344,7 @@ $userAdd.submit(function(event){
 						}
 					});
 					addUserToList(data.user.name,data.user.realname,imgSrc,true);
+					addUserToListRunIntro(false);
 					updateUsersStorage();
 				}
 			}

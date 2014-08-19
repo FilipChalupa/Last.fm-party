@@ -176,8 +176,14 @@
     #users .list {
       margin: 10px 0;
     }
+    #users .list .user.intro {
+      opacity: 0;
+        left: 40px;
+    }
     #users .list .user {
+      transition: opacity 0.2s, left 0.2s;
       position: relative;
+        left: 0;
     }
     #users .list .user .opener {
       position: relative;
