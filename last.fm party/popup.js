@@ -275,7 +275,7 @@ function updateTracks() {
 	} else {
 		setTimeout(function(){
 			if (isEmpty($tracksInfo)) {
-				$tracksInfo.append('<div class="text-padding center">Maybe the party hasn\'t started yet.<br>Played songs will appear here.</div>');
+				$tracksInfo.append('<div class="text-padding"><br>Maybe the party hasn\'t started yet.<br>Played songs will appear here.</div>');
 			}
 		},1000);
 	}
