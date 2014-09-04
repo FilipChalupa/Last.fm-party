@@ -105,11 +105,11 @@ function action(name,param,param2) {
 					path: 'icon_party.png'
 				}, function (){});
 				showPartyDetail();
-				if (!(localStorage['sett-disable-scrobble'] === 'true')) {
+				/*if (!(localStorage['sett-disable-scrobble'] === 'true')) {
 					$partyInfoText.text('');
 				} else {
 					$partyInfoText.text('The tracks won\'t be scrobbled to your profile.');
-				}
+				}*/
 			} else if (param === 'settings') {
 				if (isEmpty($socialFacebook)) {
 					$socialFacebook.append('<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Flast.fm.party&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=737290722994545" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true" width="100%"></iframe>');
@@ -223,7 +223,7 @@ function showPartyDetail() {
 			if (!name) {
 				name = data.user.name;
 			}
-			html += '<div class="name"><div>'+name+'</div><div class="counter"><span class="counter-text" title="Songs played in the party"></span></div></div></a>';
+			html += '<div class="name"><div>'+name+'</div><div class="counter"><span class="counter-text" title="Songs played in the party"></span></div></div>'+(!(localStorage['sett-disable-scrobble'] === 'true')?'':'<div class="disabled-scrobbling" title="The tracks won\'t be scrobbled to your profile.">?</div>')+'</a>';
 			$userInfo.append(html);
 		}
 	})
@@ -272,13 +272,13 @@ function updateTracks() {
 				});
 			}
 		});
-	} else {
-		setTimeout(function(){
-			if (isEmpty($tracksInfo)) {
-				$tracksInfo.append('<div class="text-padding"><br>Maybe the party hasn\'t started yet.<br>Played songs will appear here.</div>');
-			}
-		},1000);
 	}
+	$partyInfoText.empty();
+	setTimeout(function(){
+		if (isEmpty($tracksInfo)) {
+			$partyInfoText.html('<div class="center">Played songs will appear here.</div>');
+		}
+	},1000);
 }
 function addUserToList(name,realname,imageurl,prepend) {
 	var html = '<div class="user intro" data-name="'+name+'" data-realname="'+realname+'" data-imageurl="'+imageurl+'"><div class="button opener" title="Join '+name+'!" data-action="startparty-'+name+'"><div class="img"'+(imageurl?' style="background-image: url('+imageurl+');"':'')+'></div>'+(realname?realname:name)+'</div><span class="button remove" title="Remove '+name+' from the list." data-action="removeuser-'+name+'">&#215;</span></div>';
