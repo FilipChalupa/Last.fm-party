@@ -263,7 +263,7 @@ function updateTracks() {
 						});
 						var html = '<a href="'+val.url+'" target="_blank" class="'+(val['@attr']?'now-playing':'')+'">';
 						if (imgSrc) {
-							html += '<img src="'+imgSrc+'">';
+							html += '<img src="'+imgSrc+'" width="'+(val['@attr']?'64':'34')+'" height="'+(val['@attr']?'64':'34')+'">';
 						}
 						html += '<div class="artist">'+val.artist['#text'] + '</div><div class="track">' + val.name+'</div>';
 						html += '</a>';
