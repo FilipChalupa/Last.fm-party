@@ -17,6 +17,7 @@ var lastFm_apiKey = 'a54aae94377c86e67aec869bc86bc7dc',
 	$buttons = $('.button'),
 	$userAdd = $('#user-add'),
 	$userAddName = $('#user-name'),
+	$usersView = $('#users'),
 	$usersList = $('#users .list'),
 	$settCheck = $('.sett-check'),
 	$settText = $('.sett-text'),
@@ -100,6 +101,7 @@ function action(name,param,param2) {
 		    	chrome.browserAction.setIcon({
 					path: 'icon.png'
 				}, function (){});
+				updateNowListeningUsers();
 			} else if (param === 'party') {
 				chrome.browserAction.setIcon({
 					path: 'icon_party.png'
@@ -390,6 +392,38 @@ $settText.change(function(){
 if (localStorage['just-authenticated'] === 'true') {
 	_gaq.push(['_trackEvent', 'authenticated', localStorage.userName]);
 	localStorage.removeItem('just-authenticated');
+}
+
+function updateNowListeningUsers() {
+	$usersList.children('.user').each(function(){
+		var $thisUser = $(this);
+		if ($thisUser.data('now-listening-checked')) {
+			return true;
+		} else {
+			$thisUser.data('now-listening-checked',true);
+			$.ajax({
+		    	cache: false,
+				url: createURL([
+					['method','user.getrecenttracks'],
+					['api_key',apiKey],
+					['user',$thisUser.data('name')]
+				]),
+		    	dataType: "json"
+			}).done(function(data) {
+				try {
+					if (!data.error && data.recenttracks.track.length > 1 && data.recenttracks.track[0].hasOwnProperty('@attr')) {
+						$thisUser.addClass('now-listening');
+					}
+				} catch (e) {}
+				updateNowListeningUsers();
+			}).always(function() {
+				if ($usersView.hasClass('show')) {
+					updateNowListeningUsers();
+				}
+			});
+			return false;
+		}
+	});
 }
 
 

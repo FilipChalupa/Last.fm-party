@@ -203,6 +203,19 @@
       position: relative;
         left: 0;
     }
+    #users .list .user:after {
+      transition: opacity 0.2s, left 0.2s;
+      opacity: 0;
+      position: absolute;
+        top: 50%;
+        left: 36px;
+      margin-top: -6px;
+      content: url(http://cdn.last.fm/flatness/global/icon_eq.gif);
+    }
+    #users .list .user.now-listening:after {
+      opacity: 1;
+        left: 45px;
+    }
     #users .list .user .opener {
       position: relative;
       padding: 3px 10px 3px 45px;
@@ -211,6 +224,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      transition: padding-left 0.2s;
+    }
+    #users .list .user.now-listening .opener {
+      padding-left: 60px;
     }
     #users .list .user .img {
       position: absolute;
