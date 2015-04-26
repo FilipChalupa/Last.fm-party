@@ -202,6 +202,7 @@
       transition: opacity 0.2s, left 0.2s;
       position: relative;
         left: 0;
+      font-weight: bold;
     }
     #users .list .user:after {
       transition: opacity 0.2s, left 0.2s;
@@ -224,10 +225,29 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      transition: padding-left 0.2s;
+      transition: padding-left 0.2s, line-height 0.2s;
     }
-    #users .list .user.now-listening .opener {
+    #users .list .user.now-listening:not(.with-lastPlayed) .opener {
       padding-left: 60px;
+    }
+    #users .list .user.with-lastPlayed .opener {
+      line-height: 17px;
+    }
+    #users .list .user.with-lastPlayed:after {
+      margin-top: 1px;
+    }
+    #users .list .user .lastTrack {
+      transition: padding-left 0.2s;
+      font-weight: normal;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      max-width: 197px;
+      box-sizing: border-box;
+    }
+    #users .list .user.now-listening.with-lastPlayed .lastTrack {
+      padding-left: 15px;
     }
     #users .list .user .img {
       position: absolute;
@@ -318,6 +338,13 @@
       transition-delay: 0.4s;
       font-style: italic;
     }
+    #settings input[type="checkbox"] {
+      position: relative;
+      top: 3px;
+    }
+    #settings .settings-field {
+      margin: 5px 0;
+    }
   </style>
   <script src="jquery-1.11.1.min.js"></script>
   <script src="md5.js"></script>
@@ -358,17 +385,21 @@
     <div class="view" data-name="settings" id="settings">
       <div class="title">Options</div>
       <div class="text-padding">
-        <div>
+        <div class="settings-field">
           <label for="sett-show-notifications">Show notifications:</label>
           <input type="checkbox" name="sett-show-notifications" value="true" id="sett-show-notifications" class="sett-check">
         </div>
-        <div>
+        <div class="settings-field">
           <label for="sett-disable-scrobble">Disable scrobbling:</label>
           <input type="checkbox" name="sett-disable-scrobble" value="true" id="sett-disable-scrobble" class="sett-check">
         </div>
-        <div>
+        <div class="settings-field">
           <label for="sett-history-length">History length:</label>
           <input type="number" name="sett-history-length" id="sett-history-length" min="1" max="10" step="1" value="5" class="sett-text">
+        </div>
+        <div class="settings-field">
+          <label for="sett-show-lastPlayed">Show last played track in friends list:</label>
+          <input type="checkbox" name="sett-show-lastPlayed" value="false" id="sett-show-lastPlayed" class="sett-check">
         </div>
         <div>
           <br>

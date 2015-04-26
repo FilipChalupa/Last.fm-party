@@ -350,7 +350,7 @@ $userAdd.submit(function(event){
                         }
                     });
                     addUserToList(data.user.name,data.user.realname,imgSrc,true);
-                    addUserToListRunIntro(false);
+                    addUserToListRunIntro(true);
                     updateUsersStorage();
                 }
             }
@@ -411,6 +411,10 @@ function updateNowListeningUsers() {
                 try {
                     if (!data.error && data.recenttracks.track.length > 1 && data.recenttracks.track[0].hasOwnProperty('@attr')) {
                         $thisUser.addClass('now-listening');
+                    }
+                    if (localStorage['sett-show-lastPlayed'] === 'true') {
+                        $thisUser.addClass('with-lastPlayed');
+                        $thisUser.find('.opener').append('<br><span class="lastTrack">'+ data.recenttracks.track[0].artist['#text'] + ' - ' + data.recenttracks.track[0].name +'</span>');
                     }
                 } catch (e) {}
                 updateNowListeningUsers();
