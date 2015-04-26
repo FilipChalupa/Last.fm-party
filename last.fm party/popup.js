@@ -83,12 +83,16 @@ function action(name,param,param2) {
                             ['user',localStorage.userName]
                         ]), function(data) {
                         if (!data.error) {
-                            $.each(data.friends.user,function(key,val){
-                                $userAddName.val(val.name);
-                                $userAdd.submit();
-                                $userAddName.val('');
-                                userAddError('');
-                            });
+                            if (data.friends.user.length === 0) {
+                                userAddError('Search for your friends.');
+                            } else {
+                                $.each(data.friends.user,function(key,val){
+                                    $userAddName.val(val.name);
+                                    $userAdd.submit();
+                                    $userAddName.val('');
+                                    userAddError('');
+                                });
+                            }
                         }
                     });
                 } else {
