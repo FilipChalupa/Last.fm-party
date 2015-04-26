@@ -298,16 +298,24 @@
     .text-padding {
       margin: 0 5px;
     }
-    #authentificate button {
+    #authentificate .anim-slidedown {
+      transition: 0.6s transform, 0.6s opacity;
+    }
+    #authentificate.intro .anim-slidedown {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    #authentificate .text-1 {
+      transition-delay: 0s;
+    }
+    #authentificate button.anim-slidedown {
+      transition-delay: 0.2s;
       margin: 0;
-      position: relative;
-        top: 0;
-      transition: 0.6s top, 0.6s opacity;
       font-size: 120%;
     }
-    #authentificate.intro button {
-        top: -30px;
-      opacity: 0;
+    #authentificate .text-2 {
+      transition-delay: 0.4s;
+      font-style: italic;
     }
   </style>
   <script src="jquery-1.11.1.min.js"></script>
@@ -319,12 +327,17 @@
   <div id="views">
     <div class="view no-footer" data-name="authentificate" id="authentificate">
       <div class="title">Login</div>
-      <div class="center">
-        Last.fm authentication is required.
+      <div class="center text-padding">
+        <div class="text-1 anim-slidedown">
+          Last.fm authentication is required.
+        </div>
+        <br>
+        <button class="button anim-slidedown" data-action="login">Authenticate</button>
         <br>
         <br>
-        <button class="button" data-action="login">Authenticate</button>
-        <br>
+        <div class="text-2 anim-slidedown">
+          <a href="http://www.last.fm/" target="_blank">Last.fm</a> is a music discovery service that gives you personalised recommendations based on the music you listen to.
+        </div>
         <br>
       </div>
     </div>
