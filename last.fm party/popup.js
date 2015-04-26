@@ -107,11 +107,6 @@ function action(name,param,param2) {
                     path: 'icon_party.png'
                 }, function (){});
                 showPartyDetail();
-                /*if (!(localStorage['sett-disable-scrobble'] === 'true')) {
-                    $partyInfoText.text('');
-                } else {
-                    $partyInfoText.text('The tracks won\'t be scrobbled to your profile.');
-                }*/
             } else if (param === 'settings') {
                 if (isEmpty($socialFacebook)) {
                     $socialFacebook.append('<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Flast.fm.party&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=737290722994545" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true" width="100%"></iframe>');
