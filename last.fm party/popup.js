@@ -215,8 +215,8 @@ function showPartyDetail() {
             var imgSrc,
                 name = data.user.realname;
             $.each(data.user.image,function(key,val){
+                imgSrc = val['#text'];
                 if (val['size'] === 'extralarge') {
-                    imgSrc = val['#text'];
                     return false;
                 }
             });
