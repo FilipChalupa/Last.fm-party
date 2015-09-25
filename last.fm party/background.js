@@ -4,6 +4,9 @@ function createURL(params) {
     for (var key in params) {
         query += encodeURI(key)+'='+encodeURI(params[key])+'&';
     }
+    if (query.slice(-1) === '&') {
+        query = query.slice(0, -1)
+    }
     return baseURL + query;
 }
 function prepareParams(params) {
@@ -47,7 +50,6 @@ function startAlarm(min) {
             path: 'icon_party.png'
         }, function (){});
         $.ajax({
-            cache: false,
             url: createURL([
                     ['method','user.getrecenttracks'],
                     ['api_key',apiKey],

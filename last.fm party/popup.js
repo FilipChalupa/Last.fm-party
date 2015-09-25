@@ -32,6 +32,9 @@ function createURL(params) {
     for (var key in params) {
         query += encodeURI(key)+'='+encodeURI(params[key])+'&';
     }
+    if (query.slice(-1) === '&') {
+        query = query.slice(0, -1)
+    }
     return baseURL + query;
 }
 function prepareParams(params) {
@@ -400,7 +403,6 @@ function updateNowListeningUsers() {
         } else {
             $thisUser.data('now-listening-checked',true);
             $.ajax({
-                cache: false,
                 url: createURL([
                     ['method','user.getrecenttracks'],
                     ['api_key',apiKey],
