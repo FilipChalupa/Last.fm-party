@@ -284,7 +284,7 @@ function updateTracks() {
     },1000);
 }
 function addUserToList(name,realname,imageurl,prepend) {
-    var html = '<div class="user intro" data-name="'+name+'" data-realname="'+realname+'" data-imageurl="'+imageurl+'"><div class="button opener" title="Join '+name+'!" data-action="startparty-'+name+'"><div class="img"'+(imageurl?' style="background-image: url('+imageurl+');"':'')+'></div>'+(realname?realname:name)+'</div><span class="button remove" title="Remove '+name+' from the list." data-action="removeuser-'+name+'">&#215;</span></div>';
+    var html = '<div class="user intro" data-name="'+name+'" '+(realname?'data-realname="'+realname+'"':'')+' data-imageurl="'+imageurl+'"><div class="button opener" title="Join '+name+'!" data-action="startparty-'+name+'"><div class="img"'+(imageurl?' style="background-image: url('+imageurl+');"':'')+'></div>'+(realname?realname:name)+'</div><span class="button remove" title="Remove '+name+' from the list." data-action="removeuser-'+name+'">&#215;</span></div>';
     if (prepend) {
         $usersList.prepend(html);
     } else {
