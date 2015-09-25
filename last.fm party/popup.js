@@ -147,7 +147,7 @@ function action(name,param,param2) {
             localStorage.processAlarmCount = 0;
             localStorage.lastTime = 0;
             localStorage.startTime = -1;
-            localStorage.nowPlayingId = '';
+            localStorage.nowPlayingId = 'none';
             chrome.runtime.sendMessage('start-party');
             localStorage.partyID = param;
             $userAddName.val(param);

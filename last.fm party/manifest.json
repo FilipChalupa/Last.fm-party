@@ -16,7 +16,8 @@
     "notifications",
     "alarms",
     "http://ws.audioscrobbler.com/",
-    "http://*.last.fm/"
+    "http://*.last.fm/",
+    "http://*.lst.fm/"
   ],
   "content_security_policy": "script-src 'self' https://stats.g.doubleclick.net; object-src 'self'",
   "web_accessible_resources": [

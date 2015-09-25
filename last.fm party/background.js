@@ -104,8 +104,8 @@ function startAlarm(min) {
                                 chrome.runtime.sendMessage('update-party-playlist');
                                 if (localStorage['sett-show-notifications'] === "true") {
                                     $.each(data.recenttracks.track[0].image,function(key,val){
+                                        imgSrc = val['#text'];
                                         if (val['size'] === 'large') {
-                                            imgSrc = val['#text'];
                                             return false;
                                         }
                                     });
@@ -120,7 +120,9 @@ function startAlarm(min) {
                                             message: data.recenttracks.track[0].artist['#text']+' - '+data.recenttracks.track[0].name,
                                             iconUrl: imgSrc
                                         }, function(id) {
-                                            //console.log("Last error:", chrome.runtime.lastError);
+                                            if (chrome.runtime.lastError) {
+                                                console.log("Create notification error:", chrome.runtime.lastError);
+                                            }
                                         });
                                 }
                             }
