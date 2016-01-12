@@ -3,11 +3,11 @@ var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-52555251-2']);
 _gaq.push(['_trackPageview']);
 
-(function() {
+/*(function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = 'https://stats.g.doubleclick.net/dc.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
+})();*/
 //analytics end
 
 var lastFm_apiKey = 'a54aae94377c86e67aec869bc86bc7dc',
