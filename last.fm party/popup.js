@@ -431,13 +431,14 @@ function updateNowListeningUsers() {
 }
 
 
-
-if (!localStorage.userSession) {
-    action('view','authentificate');
-} else {
-    if (localStorage.partyID) {
-        action('view','party');
+setTimeout(function(){
+    if (!localStorage.userSession) {
+        action('view','authentificate');
     } else {
-        action('view','users');
+        if (localStorage.partyID) {
+            action('view','party');
+        } else {
+            action('view','users');
+        }
     }
-}
+},2);
