@@ -108,9 +108,7 @@ function action(name,param,param2) {
                 chrome.browserAction.setIcon({
                     path: 'icon.png'
                 }, function (){});
-                if (localStorage['sett-show-lastPlayed'] === 'true') {
-                    updateNowListeningUsers();
-                }
+                updateNowListeningUsers();
             } else if (param === 'party') {
                 chrome.browserAction.setIcon({
                     path: 'icon_party.png'
@@ -361,6 +359,7 @@ $userAdd.submit(function(event){
                     addUserToList(data.user.name,data.user.realname,imgSrc,true);
                     addUserToListRunIntro(true);
                     updateUsersStorage();
+                    updateNowListeningUsers();
                 }
             }
         })
@@ -373,6 +372,15 @@ $userAdd.submit(function(event){
         });
     }
 });
+
+if (localStorage['just-authenticated'] === 'true') {
+    _gaq.push(['_trackEvent', 'authenticated', localStorage.userName, localStorage.userName]);
+    localStorage.removeItem('just-authenticated');
+
+    // Settings defaults
+    localStorage['sett-show-notifications'] = true
+    localStorage['sett-show-lastPlayed'] = true
+}
 
 $settCheck.each(function(){
     var $this = $(this);
@@ -396,12 +404,11 @@ $settText.change(function(){
     var $this = $(this);
     localStorage[$this.attr('name')] = $this.val();
 });
-if (localStorage['just-authenticated'] === 'true') {
-    _gaq.push(['_trackEvent', 'authenticated', localStorage.userName, localStorage.userName]);
-    localStorage.removeItem('just-authenticated');
-}
 
 function updateNowListeningUsers() {
+    if (localStorage['sett-show-lastPlayed'] !== 'true') {
+        return
+    }
     $usersList.children('.user').each(function(){
         var $thisUser = $(this);
         if ($thisUser.data('now-listening-checked')) {
@@ -420,10 +427,8 @@ function updateNowListeningUsers() {
                     if (!data.error && data.recenttracks.track.length > 1 && data.recenttracks.track[0].hasOwnProperty('@attr')) {
                         $thisUser.addClass('now-listening');
                     }
-                    if (localStorage['sett-show-lastPlayed'] === 'true') {
-                        $thisUser.addClass('with-lastPlayed');
-                        $thisUser.find('.opener').append('<br><span class="lastTrack">'+ data.recenttracks.track[0].artist['#text'] + ' - ' + data.recenttracks.track[0].name +'</span>');
-                    }
+                    $thisUser.addClass('with-lastPlayed');
+                    $thisUser.find('.opener').append('<br><span class="lastTrack">'+ data.recenttracks.track[0].artist['#text'] + ' - ' + data.recenttracks.track[0].name +'</span>');
                 } catch (e) {}
                 updateNowListeningUsers();
             }).always(function() {
