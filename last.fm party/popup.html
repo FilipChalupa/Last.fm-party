@@ -134,8 +134,6 @@
     .footer {
       border-top: 1px solid #9A9A9A;
       background-color: #E6E6E6;
-      height: 25px;
-      line-height: 25px;
       position: relative;
       box-shadow: 0 0 3px 0 #9A9A9A;
       z-index: 10;
@@ -148,19 +146,17 @@
       margin: 0 3px -3px 3px;
     }
     .footer .button {
-      position: absolute;
-        top: 0;
-        bottom: 0;
+        float: right;
+        padding: 5px;
     }
-    .footer .button:first-child {
-        left: 0;
-    }
-    .footer .button:last-child {
-        right: 0;
-        left: auto;
+    .footer .button-back {
+      float: left;
     }
     .footer .button:hover {
       text-decoration: underline;
+    }
+    .footer .button-back img {
+      margin-left: 0;
     }
     .hide {
       display: none;
@@ -375,7 +371,6 @@
       <div class="live-buttons list"></div>
       <div class="footer">
         <span class="button" data-action="view-settings"><img src="icon_settings.png">Options</span>
-        <span class="button hide"></span>
       </div>
     </div>
     <div class="view" data-name="settings" id="settings">
@@ -412,7 +407,7 @@
         <button class="button" data-action="logout">Log out</button>
       </div>
       <div class="footer">
-        <span class="button" data-action="leavesettings">Go back<img src="icon_leave.png"></span>
+        <span class="button button-back" data-action="leavesettings"><img src="icon_leave.png">Go back</span>
       </div>
     </div>
     <div class="view no-footer" data-name="logout">
@@ -429,8 +424,8 @@
       <div class="info-text text-padding"></div>
       <div class="tracks-info"></div>
       <div class="footer">
+        <span class="button button-back" data-action="leaveparty"><img src="icon_leave.png">Leave party</span>
         <span class="button" data-action="view-settings"><img src="icon_settings.png">Options</span>
-        <span class="button" data-action="leaveparty">Leave party<img src="icon_leave.png"></span>
       </div>
     </div>
   </div>
