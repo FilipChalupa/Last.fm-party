@@ -15,6 +15,7 @@
   "permissions": [
     "notifications",
     "alarms",
+    "storage",
     "http://ws.audioscrobbler.com/",
     "http://*.last.fm/",
     "http://*.lst.fm/"

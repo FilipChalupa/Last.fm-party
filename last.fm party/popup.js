@@ -166,10 +166,12 @@ function action(name,param,param2) {
             if (localStorage.partyID) {
                 chrome.runtime.sendMessage('stop-party');
             }
-            $.each(localStorage,function(key,val){
-                localStorage.removeItem(key);
-            });
-            action('view','logout');
+            chrome.storage.sync.remove('userSession', function(){
+                $.each(localStorage,function(key,val){
+                    localStorage.removeItem(key);
+                });
+                action('view','logout');
+            })
             break;
         case 'login':
             _gaq.push(['_trackEvent', 'login', '-', localStorage.userName]);
@@ -432,15 +434,28 @@ function updateNowListeningUsers() {
     });
 }
 
-
-setTimeout(function(){
-    if (!localStorage.userSession) {
-        action('view','authentificate');
+function getUserSession(callback) {
+    if (localStorage.userSession) {
+        chrome.storage.sync.set({'userSession': localStorage.userSession}, function(data){
+            var userSession = localStorage.userSession
+            localStorage.removeItem('userSession');
+            callback(userSession)
+        })
     } else {
+        chrome.storage.sync.get('userSession', function(data){
+            callback(data.userSession)
+        })
+    }
+}
+
+getUserSession(function(userSession){
+    if (userSession) {
         if (localStorage.partyID) {
             action('view','party');
         } else {
             action('view','users');
         }
+    } else {
+        action('view','authentificate');
     }
-},2);
+})

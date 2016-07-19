@@ -1,3 +1,8 @@
+var userSession
+chrome.storage.sync.get('userSession', function(data){
+    userSession = data.userSession
+})
+
 function createURL(params) {
     params = prepareParams(params);
     var query = '?';
@@ -81,7 +86,7 @@ function startAlarm(min) {
                                         ['album[0]',data.recenttracks.track[isPlaying?1:0].album['#text']],
                                         ['timestamp[0]',localStorage.lastTime],
                                         ['chosenByUser[0]',0],
-                                        ['sk',localStorage.userSession]
+                                        ['sk',userSession]
                                     ]), function(data) {});
                                 }
                             }
@@ -97,7 +102,7 @@ function startAlarm(min) {
                                         ['track',data.recenttracks.track[0].name],
                                         ['album',data.recenttracks.track[0].album['#text']],
                                         ['duration',300],
-                                        ['sk',localStorage.userSession]
+                                        ['sk',userSession]
                                     ]), function(data) {});
                                 }
                                 console.log('Now playing: '+data.recenttracks.track[0].artist['#text']+' - '+data.recenttracks.track[0].name);
