@@ -108,7 +108,9 @@ function action(name,param,param2) {
                 chrome.browserAction.setIcon({
                     path: 'icon.png'
                 }, function (){});
-                updateNowListeningUsers();
+                if (localStorage['sett-show-lastPlayed'] === 'true') {
+                    updateNowListeningUsers();
+                }
             } else if (param === 'party') {
                 chrome.browserAction.setIcon({
                     path: 'icon_party.png'
