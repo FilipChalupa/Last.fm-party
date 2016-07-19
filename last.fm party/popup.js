@@ -67,7 +67,7 @@ function getJSONFromStorage(name) {
 function action(name,param,param2) {
     switch (name) {
         case 'view':
-            _gaq.push(['_trackEvent', 'view', param]);
+            _gaq.push(['_trackEvent', 'view', param, localStorage.userName]);
             $views.addClass('intro');
             setTimeout(function(){
                 $views.removeClass('intro');
@@ -133,7 +133,7 @@ function action(name,param,param2) {
         case 'leavesettings':
             for (var key in localStorage) {
                 if (key.substr(0,5) === 'sett-') {
-                    _gaq.push(['_trackEvent', key.substr(5), localStorage[key]]);
+                    _gaq.push(['_trackEvent', key.substr(5), localStorage[key], localStorage.userName]);
                 }
             }
             if (localStorage.partyID) {
@@ -143,7 +143,7 @@ function action(name,param,param2) {
             }
             break;
         case 'startparty':
-            _gaq.push(['_trackEvent', 'party-start', param]);
+            _gaq.push(['_trackEvent', 'party-start', param, localStorage.userName]);
             localStorage.processAlarmCount = 0;
             localStorage.lastTime = 0;
             localStorage.startTime = -1;
@@ -156,13 +156,13 @@ function action(name,param,param2) {
             action('view','party');
             break;
         case 'leaveparty':
-            _gaq.push(['_trackEvent', 'party-stop', localStorage.partyLengthCounter]);
+            _gaq.push(['_trackEvent', 'party-stop', localStorage.partyLengthCounter, localStorage.userName]);
             chrome.runtime.sendMessage('stop-party');
             localStorage.removeItem('partyID');
             action('view','users');
             break;
         case 'logout':
-            _gaq.push(['_trackEvent', 'logout','-']);
+            _gaq.push(['_trackEvent', 'logout', '-', localStorage.userName]);
             if (localStorage.partyID) {
                 chrome.runtime.sendMessage('stop-party');
             }
@@ -172,7 +172,7 @@ function action(name,param,param2) {
             action('view','logout');
             break;
         case 'login':
-            _gaq.push(['_trackEvent', 'login','-']);
+            _gaq.push(['_trackEvent', 'login', '-', localStorage.userName]);
             window.open('http://www.last.fm/api/auth/?api_key='+lastFm_apiKey+'&cb='+encodeURI(window.location.origin+'/callback.html'),'_blank');
             break;
         default:
@@ -393,7 +393,7 @@ $settText.change(function(){
     localStorage[$this.attr('name')] = $this.val();
 });
 if (localStorage['just-authenticated'] === 'true') {
-    _gaq.push(['_trackEvent', 'authenticated', localStorage.userName]);
+    _gaq.push(['_trackEvent', 'authenticated', localStorage.userName, localStorage.userName]);
     localStorage.removeItem('just-authenticated');
 }
 
