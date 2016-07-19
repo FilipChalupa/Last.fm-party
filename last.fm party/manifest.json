@@ -3,7 +3,7 @@
 
   "name": "Last.fm party",
   "description": "This extension allows you to scrobble what somebody else is scrobbling.",
-  "version": "1.6.6",
+  "version": "1.6.7",
   "author": "Filip Chalupa",
 
   "incognito": "split",
